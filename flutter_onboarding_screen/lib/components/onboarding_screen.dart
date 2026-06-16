@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_onboarding_screen/pages/home_page.dart';
 import 'package:flutter_onboarding_screen/pages/onboarding_cards.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -87,9 +88,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
             ),
             TextButton(
-              onPressed: () {
+              onPressed: () async {
                 if (currentPage == totalPages - 1) {
+                  final prefs = await SharedPreferences.getInstance();
+                  prefs.setBool('showHome', true);
                   Navigator.pushReplacement(
+                    // ignore: use_build_context_synchronously
                     context,
                     MaterialPageRoute(builder: (context) => const HomePage()),
                   );
